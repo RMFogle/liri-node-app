@@ -2,23 +2,24 @@ require("dotenv").config();
 
 var keys = require("./keys.js"); 
 
-var spotify = new spotify(keys.spotify); 
+var omdbData = require("axios")
+
+//var spotify = new spotify(keys.spotify); 
 
 var fs = require('fs'); 
 
 // Make it so liri.js can take in commands from bandsintown, spotify, movie-this:
 
 // Command arguments 
-var firstArgv = process.argv; 
-//var secondArgv = process.argv[2]; 
+var nodeArgv = process.argv; 
 // variable to hold move or song input 
 var input = ""; 
 // to run through multiple word arguments 
-for (var i = 3; i < firstArgv.length; i++) {
-    if (i > 3 && i < firstArgv.length) {
-        input = input + "+" + firstArgv[i];
+for (var i = 3; i < nodeArgv.length; i++) {
+    if (i > 3 && i < nodeArgv.length) {
+        input = input + "+" + nodeArgv[i];
     } else {
-        input = input + firstArgv[i]; 
+        input += nodeArgv[i]; 
     }
 }
 
@@ -37,6 +38,7 @@ for (var i = 3; i < firstArgv.length; i++) {
 // Name of venue 
 // Venue location 
 // Date of event(use moment to format this as "MM/DD/YYYY")
+
 
 
 
@@ -68,19 +70,24 @@ function getSpotify(song) {
 
 
 
-// movie-this
-// in the command line: node liri.js movie-this '<movie name here>' 
-// this will show the following information in the terminal:
-// * Title of the movie.
-// * Year the movie came out.
-// * IMDB Rating of the movie.
-// * Rotten Tomatoes Rating of the movie.
-// * Country where the movie was produced.
-// * Language of the movie.
-// * Plot of the movie.
-// * Actors in the movie.
+// movie-this -- in the command line: node liri.js movie-this '<movie name here>' 
+// queryURL 
+var queryUrl = "http://www.omdbapi.com/?t=" + input + "&y=&plot=short&apikey=trilogy";
+console.log(queryUrl); 
+// function to request data from omdb -- this will show the following information in the terminal:
+omdbData.get(queryUrl).then(
+    function(response) {
+        console.log("Title: " + response.data.Title); 
+        console.log("Release Year: " + response.data.Year); 
+        console.log("IMDB Rating: " + response.data.imdbRating);
+        console.log("RT Rating: " + response.data.tomatoRating); 
+        console.log("Country: " + response.data.Country); 
+        console.log("Language: " + response.data.Language); 
+        console.log("Plot: " + response.data.Plot); 
+        console.log("Actors: " + response.data.Actors); 
+    }
+)
 // If user doesn't type a move in, the program will output data from the movie 'Mr. Nobody.'
-// Use axios package to retrieve datat from OMDB API. Can use trilogy api key. 
 
 
 
@@ -89,7 +96,6 @@ function getSpotify(song) {
 //call one of LIRI's commands. 
 // It should run spotify-this-song for "I Want it That Way," as follows the text in random.txt.
 // Edit the text in random.txt to test out the feature for movie-this and concert-this.
-
 function doIt(){
     fs.readFile('random.txt', "utf8", function(error, data){
         var txt = data.split(','); 
