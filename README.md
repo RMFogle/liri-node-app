@@ -1,10 +1,11 @@
 # liri-node-app
 Week-10 Liri Bot Assignment 
 
-*See Screenshot(17).png for display return of data in bash/VS_Code. 
+*See Screenshot(Liri-Bot_bash).png for display return of data in bash/VS_Code. 
+
 Issues: 
-    Can't get my Switch/Case to work. When I wrap my bandsInTown and OMDB api's into fucntions they call/return data. 
-    Currently the same data returns when any command it entered.
+    Can't get my Switch/Case to work. When I wrap my bandsInTown and OMDB api's into fucntions they DO NOT call/return data. 
+    Currently the same data returns when any command is entered.
 
 ---------------------------------------------------------------
 
