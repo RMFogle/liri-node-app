@@ -1,22 +1,18 @@
 require("dotenv").config(); 
 
-var keys = require("./keys.js"); 
-
-var bandsintown = require("axios"); 
-
-var omdbData = require("axios")
+var axios = require("axios")
 
 var spotify = require("./keys.js"); 
 
 var fs = require('fs'); 
 
 var moment = require('moment'); 
-moment().format(); 
 
 // Make it so liri.js can take in commands from bandsintown, spotify, movie-this:
 
 // Command arguments 
 var nodeArgv = process.argv; 
+var command = process.argv[2]; 
 // variable to hold move or song input 
 var input = ""; 
 // to run through multiple word arguments 
@@ -29,28 +25,54 @@ for (var i = 3; i < nodeArgv.length; i++) {
 }
 
 
-// swith case -- research using switch and case 
+// swith case 
+// switch(command) {
+//     case "concert-this": 
+//     getBands(); 
+//     break; 
+
+//     case "spotify-this-song": 
+//     if(input) {
+//         getSpotify(input); 
+//     } else {
+//         getSpotify("The Sign")
+//     }
+//     break; 
+
+//     case "movie-this": 
+//     if(input) {
+//         getMovie(input); 
+//     } else {
+//         getMovie("Mr. Nobody"); 
+//     }
+//     break; 
+
+//     case "do-what-it-says": 
+//         doIt(); 
+//         break; 
+
+//     default: 
+//     console.log("Please enter command: concert-this, spotify-this song, movie-this"); 
+//     break; 
+// }
+
 
 
 
 // Make it so liri.js can take in commands:
 
-
-
-// concert-this - use axios package ("https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp")
+var queryURL = "https://rest.bandsintown.com/artists/" + input + "/events?app_id=codingbootcamp"; 
+console.log(queryURL)
 // in comand line: node liri.js concert-this <artist/band name here> 
-//function getBands(artist) {
-var queryURL = "https://rest.bandsintown.com/artists/" + input + "?app_id=codingbootcamp";
-console.log(queryURL); 
-// Searches the Bands in Town Artist Events API -- rendering the following information to the terminal:
-bandsintown.get(queryURL).then(
+//function getBands() {
+        axios.get(queryURL).then(
     function(response) {
         // Name of venue
         console.log("Venue: " + response.name); 
         // Venue location 
         console.log("Location: " + response.city); 
         // Date of event(use moment to format this as "MM/DD/YYYY")
-        console.log("Date: " + response.datetime);
+        console.log("Date: " + moment(response.datetime).format("MM/DD/YYYY"));
     }
 )
 //}; 
@@ -58,7 +80,6 @@ bandsintown.get(queryURL).then(
 
 
 
-// spotify-this-song **sing up for Spotify API - follow instructions on gitlab 
 // in comand line: node liri.js spotify-this-song '<song name here>' 
 //* if no song is provided then program will default to "The Sign" by Ace of Base. 
 function getSpotify(song) {
@@ -91,7 +112,8 @@ function getSpotify(song) {
 var queryUrl = "http://www.omdbapi.com/?t=" + input + "&y=&plot=short&apikey=trilogy";
 console.log(queryUrl); 
 // function to request data from omdb -- this will show the following information in the terminal:
-omdbData.get(queryUrl).then(
+//function getMovie() {
+axios.get(queryUrl).then(
     function(response) {
         console.log("Title: " + response.data.Title); 
         console.log("Release Year: " + response.data.Year); 
@@ -103,6 +125,7 @@ omdbData.get(queryUrl).then(
         console.log("Actors: " + response.data.Actors); 
     }
 )
+//};
 // If user doesn't type a move in, the program will output data from the movie 'Mr. Nobody.'
 
 
