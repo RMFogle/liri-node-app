@@ -1,14 +1,20 @@
 # liri-node-app
 Week-10 Liri Bot Assignment 
 
-*See Screenshot(Liri-Bot_bash).png for display return of data in bash/VS_Code. 
-Screenshot (Liri-Bot_bash).png
-
-![Screenshot](https://raw.githubusercontent.com/RMFogle/liri-node-app/master/Screenshot%20(Liri-Bot_bash).png)
 
 Issues: 
     Can't get my Switch/Case to work. When I wrap my bandsInTown and OMDB api's into fucntions they DO NOT call/return data. 
-    Currently the same data returns when any command is entered.
+    Currently the same data returns when any command is entered as you can see here in screenshot_1_concert-this. 
+
+![Screenshot_1]()
+
+The same data kay value pairs return when 'spotify-this-song' is entered in the command as you can see here in screenshot_2_spotify-this-song. 
+
+![Screenshot_2]()
+
+And, again the same data kay value pairs return when 'movie-this' is entered in the command as you can see here in screenshot_2_spotify-this-song. 
+
+![Screenshot_3]()
 
 ---------------------------------------------------------------
 
